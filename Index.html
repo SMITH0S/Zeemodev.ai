@@ -3,42 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PyScript AI Example</title>
+    <title>Zeemo AI</title>
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
     <py-config>
-        packages = ["scikit-learn", "numpy"]
+        packages = ["transformers.js", "torch", "numpy", "scikit-learn"]
         [[fetch]]
-        files = ["./Zeemo.py", "./model.sav"]
+        files = ["./zeemo_model.py"]
     </py-config>
 </head>
 <body>
-    <h1>Simple AI Model in PyScript</h1>
-    
-    <input type="number" id="age" value="47" /><br>
-    <input type="number" id="sex" value="1" /><br>
-    <button id="predict">Predict</button>
-    
-    <div id="output"></div>
-    
-    <py-script>
-        import numpy as np
-        from pyodide.ffi import create_proxy
-        from my_model import load_model, predict  # Import functions from my_model.py
-        
-        # Load the model
-        loaded_model = load_model('model.sav')
-        
-        def give_prediction(event):
-            age = int(Element('age').element.value)
-            sex = int(Element('sex').element.value)
-            input_list = np.array([age, sex])
-            prediction = predict(loaded_model, input_list)
-            Element("output").write(f"Prediction: {prediction}")
-        
-        # Attach the event listener to the button
-        predict_button = Element("predict")
-        predict_button.element.onclick = create_proxy(give_prediction)
-    </py-script>
+    <h1>Zeemo AI</h1>
+    <input type="text" id="user_input" placeholder="Enter your message">
+    <button id="send_button">Send</button>
+    <div id="ai_response"></div>
+    <py-script src="./zeemo_model.py"></py-script>
 </body>
 </html>
